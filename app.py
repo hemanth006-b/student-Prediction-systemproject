@@ -7,7 +7,10 @@ from flask import Flask, Response, jsonify, request
 
 ROOT = Path(__file__).resolve().parent
 MODEL_PATH = ROOT / "student_performance_model.pkl"
-DATA_PATH = ROOT / "data" / "student_performance.csv"
+DATA_PATH = next(
+    (p for p in (ROOT / "data" / "student_performance.csv", ROOT / "student_performance.csv") if p.exists()),
+    ROOT / "data" / "student_performance.csv",
+)
 FEATURES = ["study_hours", "attendance", "previous_marks", "assignment_score"]
 
 app = Flask(__name__)
